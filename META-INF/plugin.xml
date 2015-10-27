@@ -1,0 +1,57 @@
+<idea-plugin version="2">
+    <id>Migger.SW.Mockito.InspectionPack</id>
+    <name>Mockito TTD inspection pack</name>
+    <version>1.0</version>
+    <vendor email="migger@yandex.ru" url="">MiggerSW</vendor>
+
+    <description><![CDATA[
+        This inspection pack adds a number of useful inspections.
+        Inspections are developed to help code in TTD-style.
+    ]]></description>
+
+    <change-notes><![CDATA[
+        * Added RunWith annotation with standard mockito annotations like @Mock and @InjectMocks
+    ]]></change-notes>
+
+    <idea-version since-build="131"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection shortName="MockitoAnnotationsWithNoRunWith"
+                         displayName="MockitoAnnotations with no @RunWith(MockitoTestRunner.class)"
+                         groupName="Mockito"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         hasStaticDescription="false"
+                         implementationClass="ru.migger.intellij.mockito.MockitoAnnotationsWithNoRunWithMockitoTestRunnerLocalInspection"/>
+    </extensions>
+
+    <application-components>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.CheckPsiClassHaveProperRunWithAnnotatiosServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.CheckPsiFieldHaveMockitoAnnotationServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.CreateMissedRunWithAnnotationProblemDescriptorServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.GetPsiFieldParentClassServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.GetPsiAnnotationDotClassParameterServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.PsiAnnotationParameterNameMatchServiceImpl</implementation-class>
+        </component>
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+    <actions>
+
+    </actions>
+
+</idea-plugin>
