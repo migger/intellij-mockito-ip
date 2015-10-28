@@ -5,19 +5,19 @@
     <vendor email="migger@yandex.ru" url="">MiggerSW</vendor>
 
     <description><![CDATA[
-        This inspection pack adds a number of useful inspections.
-        Inspections are developed to help code in TTD-style.
+        This pack of inspections  adds a number of useful inspections.
+        Inspections are developed to help programmers who are working in TTD style.
     ]]></description>
 
     <change-notes><![CDATA[
-        * Added RunWith annotation with standard mockito annotations like @Mock and @InjectMocks
+        * Added validation that class is annotated with @RunWith when standard mockito annotations such as @Mock and @InjectMocks are used.
     ]]></change-notes>
 
     <idea-version since-build="131"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <localInspection shortName="MockitoAnnotationsWithNoRunWith"
-                         displayName="MockitoAnnotations with no @RunWith(MockitoTestRunner.class)"
+                         displayName="Mockito Annotations with no @RunWith(MockitoTestRunner.class)"
                          groupName="Mockito"
                          enabledByDefault="true"
                          level="ERROR"
@@ -44,14 +44,22 @@
         <component>
             <implementation-class>ru.migger.intellij.mockito.service.PsiAnnotationParameterNameMatchServiceImpl</implementation-class>
         </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.CreateMissedRunWithAnnotationLocalQuickFixServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.FindPsiClassServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.EnsureClassesIsImportedServiceImpl</implementation-class>
+        </component>
+        <component>
+            <implementation-class>ru.migger.intellij.mockito.service.AddImportServiceImpl</implementation-class>
+        </component>
     </application-components>
 
-    <project-components>
-        <!-- Add your project components here -->
-    </project-components>
+    <project-components/>
 
-    <actions>
-
-    </actions>
+    <actions/>
 
 </idea-plugin>

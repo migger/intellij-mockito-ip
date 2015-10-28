@@ -18,10 +18,12 @@ import static org.mockito.Mockito.when;
 
 public class CreateMissedRunWithAnnotationProblemDescriptorServiceImplTest {
     private CreateMissedRunWithAnnotationProblemDescriptorService createMissedRunWithAnnotationProblemDescriptorService;
+    private CreateMissedRunWithAnnotationLocalQuickFixService createMissedRunWithAnnotationLocalQuickFixService;
 
     @Before
     public void setUp() throws Exception {
-        createMissedRunWithAnnotationProblemDescriptorService = new CreateMissedRunWithAnnotationProblemDescriptorServiceImpl();
+        createMissedRunWithAnnotationLocalQuickFixService = mock(CreateMissedRunWithAnnotationLocalQuickFixService.class);
+        createMissedRunWithAnnotationProblemDescriptorService = new CreateMissedRunWithAnnotationProblemDescriptorServiceImpl(createMissedRunWithAnnotationLocalQuickFixService);
     }
 
     @Test
@@ -42,12 +44,14 @@ public class CreateMissedRunWithAnnotationProblemDescriptorServiceImplTest {
         final InspectionManager inspectionManager = mock(InspectionManager.class);
         final ProblemDescriptor problemDescriptor = mock(ProblemDescriptor.class);
         final PsiIdentifier nameIdentifier = mock(PsiIdentifier.class);
+        final LocalQuickFix[] localQuickFixes = new LocalQuickFix[] {mock(LocalQuickFix.class)};
         when(psiClass.getNameIdentifier()).thenReturn(nameIdentifier);
+        when(createMissedRunWithAnnotationLocalQuickFixService.createLocalQuickFixes(psiClass)).thenReturn(localQuickFixes);
         when(inspectionManager.createProblemDescriptor(
                 nameIdentifier,
                 "Class is not annotated with @RunWith(MockitoJUnitRunner.class)",
                 true,
-                new LocalQuickFix[0],
+                localQuickFixes,
                 ProblemHighlightType.GENERIC_ERROR)).thenReturn(problemDescriptor);
         assertEquals(problemDescriptor, createMissedRunWithAnnotationProblemDescriptorService.createProblemDescriptor(inspectionManager, psiClass));
     }
