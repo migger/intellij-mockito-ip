@@ -85,7 +85,7 @@ public class MockitoAnnotationsWithNoRunWithMockitoTestRunnerLocalInspectionTest
         when(checkPsiFieldHaveMockitoAnnotationService.isPsiFiledHaveMockitoAnnotation(psiField)).thenReturn(true);
         when(getPsiFieldParentClassService.getParentClass(psiField)).thenReturn(psiClass);
         when(checkPsiClassHaveProperRunWithAnnotatiosService.isPsiClassHaveProperAnnotation(psiClass)).thenReturn(false);
-        when(createMissedRunWithAnnotationProblemDescriptorService.createProblemDescriptor(inspectionManager, psiClass)).thenReturn(problemDescriptor);
+        when(createMissedRunWithAnnotationProblemDescriptorService.createProblemDescriptor(inspectionManager, psiField)).thenReturn(problemDescriptor);
         final ProblemDescriptor[] problemDescriptors = mockitoAnnotationsWithNoRunWithMockitoTestRunnerLocalInspection.checkField(psiField, inspectionManager, true);
         assertNotNull(problemDescriptors);
         assertEquals(1, problemDescriptors.length);

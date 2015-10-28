@@ -6,9 +6,10 @@ import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.migger.intellij.mockito.service.CheckPsiFieldHaveMockitoAnnotationService;
 import ru.migger.intellij.mockito.service.CheckPsiClassHaveProperRunWithAnnotatiosService;
+import ru.migger.intellij.mockito.service.CheckPsiFieldHaveMockitoAnnotationService;
 import ru.migger.intellij.mockito.service.CreateMissedRunWithAnnotationProblemDescriptorService;
 import ru.migger.intellij.mockito.service.GetPsiFieldParentClassService;
 
@@ -33,7 +34,7 @@ public class MockitoAnnotationsWithNoRunWithMockitoTestRunnerLocalInspection ext
 
     @Nullable
     @Override
-    public ProblemDescriptor[] checkField(PsiField field, InspectionManager manager, boolean isOnTheFly) {
+    public ProblemDescriptor[] checkField(@NotNull PsiField field, @NotNull InspectionManager manager, boolean isOnTheFly) {
        if(!checkPsiFieldHaveMockitoAnnotationService.isPsiFiledHaveMockitoAnnotation(field))
            return null;
         final PsiClass parentClass = getPsiFieldParentClassService.getParentClass(field);
@@ -42,7 +43,7 @@ public class MockitoAnnotationsWithNoRunWithMockitoTestRunnerLocalInspection ext
         if(checkPsiClassHaveProperRunWithAnnotatiosService.isPsiClassHaveProperAnnotation(parentClass)) {
             return null;
         }
-        final ProblemDescriptor problemDescriptor = createMissedRunWithAnnotationProblemDescriptorService.createProblemDescriptor(manager, parentClass);
+        final ProblemDescriptor problemDescriptor = createMissedRunWithAnnotationProblemDescriptorService.createProblemDescriptor(manager, field);
         if(problemDescriptor == null)
             return null;
         return new ProblemDescriptor[]{problemDescriptor};
